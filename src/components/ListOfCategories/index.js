@@ -1,19 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import { Category } from '../Category/index'
+import { Category, CategorySkeleton } from '../Category/index'
 import { List, Item } from './styles'
 
-export const ListOfCategories = () => {
+function useCategoriesData () {
   const [categories, setCategories] = useState([])
-  const [showFixed, setShowFixed] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await window.fetch('https://petgram-server-alecefe-9ul0jzgri.vercel.app/categories')
-      const data = await response.json()
-      setCategories(data)
-    }
-    fetchCategories()
+    setLoading(true)
+    // Con async y await
+    // const fetchCategories = async () => {
+    //   const response = await window.fetch('https://petgram-server-alecefe-9ul0jzgri.vercel.app/categories')
+    //   const data = await response.json()
+    //   setCategories(data)
+    // }
+    // fetchCategories()
+
+    // Con promises
+    window.fetch('https://petgram-server-alecefe-9ul0jzgri.vercel.app/categories')
+      .then(res => res.json())
+      .then(response => {
+        setCategories(response)
+      })
+      .catch(err => {
+        console.err(err, 'Ha ocurrido un error')
+        setLoading(false)
+      })
+    setLoading(false)
   }, [])
+
+  return { categories, loading }
+}
+
+export const ListOfCategories = () => {
+  const { categories, loading } = useCategoriesData()
+  const [showFixed, setShowFixed] = useState(false)
 
   useEffect(() => {
     const onScroll = e => {
@@ -28,13 +49,15 @@ export const ListOfCategories = () => {
   }, [showFixed])
 
   const renderList = (fixed) => (
-    <List className={fixed ? 'fixed' : '?'}>
+    <List fixed={fixed}>
       {
-        categories.map(category =>
-          <Item key={category.id}>
-            <Category {...category} />
-          </Item>
-        )
+        loading
+          ? <CategorySkeleton />
+          : categories.map(category =>
+            <Item key={category.id}>
+              <Category {...category} path={`/pet/${category.id}`} />
+            </Item>
+          )
       }
     </List>
   )
