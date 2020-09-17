@@ -13,7 +13,7 @@ import { useStateValue } from './Context'
 export const App = () => {
   const urlParams = new window.URLSearchParams(window.location.search)
   const detailId = urlParams.get('detail')
-  const { isAuth, dispatch } = useStateValue()
+  const [{ isAuth }, dispatch] = useStateValue()
 
   return (
     <>
@@ -32,11 +32,11 @@ export const App = () => {
               ? <Router>
                 <Favs path='/favs' />
                 <User path='/user' />
-                </Router>
+              </Router>
               : <Router>
                 <NotRegisteredUser path='/favs' />
                 <NotRegisteredUser path='/user' />
-                </Router>
+              </Router>
           }
         </>
       }
