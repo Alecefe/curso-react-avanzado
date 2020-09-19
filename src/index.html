@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Petgram</title>
-</head>
-<body>
-  <div id="app"></div>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Petgram</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <noscript>
+            <h3>Esta app necesita Javascript para funcionar</h3>
+        </noscript>
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", function () {
+                    navigator.serviceWorker
+                        .register("./service-worker.js")
+                        .then((registration) => {
+                            console.log("SW Registrado");
+                        })
+                        .catch((registrationError) => {
+                            console.log("SW Error", registrationError);
+                        });
+                });
+            }
+        </script>
+        <link
+            rel="apple-touch-icon"
+            href="/dist/icon_192x192.8248714c6772e79aa32d72e7e5c5659f.png"
+        />
+    </body>
 </html>

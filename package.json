@@ -8,7 +8,8 @@
         "now-build": "npm run build",
         "build": "webpack",
         "dev": "webpack-dev-server --history-api-fallbacknp",
-        "lint": "standard"
+        "lint": "standard",
+        "serve:dev": "webpack --mode 'development' && npx serve dist -s"
     },
     "repository": {
         "type": "git",
@@ -29,10 +30,13 @@
         "babel-loader": "^8.1.0",
         "html-webpack-plugin": "^4.4.1",
         "json-loader": "^0.5.7",
+        "prop-types": "^15.7.2",
         "standard": "^14.3.4",
         "webpack": "^4.44.1",
         "webpack-cli": "^3.3.12",
-        "webpack-dev-server": "^3.11.0"
+        "webpack-dev-server": "^3.11.0",
+        "webpack-pwa-manifest": "^4.2.0",
+        "workbox-webpack-plugin": "^5.1.4"
     },
     "dependencies": {
         "@apollo/react-hooks": "^4.0.0",
