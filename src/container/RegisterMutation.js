@@ -8,6 +8,13 @@ mutation signup($input: UserCredentials!) {
 `
 
 export const useRegisterMutation = () => {
-  const [register] = useMutation(REGISTER)
-  return register
+  const [register, { data, loading, error }] = useMutation(REGISTER)
+  const mutation = (email, password) =>
+    register({
+      variables: {
+        input: { email, password }
+      }
+    })
+  const registerMutation = { mutation, data, loading, error }
+  return registerMutation
 }
